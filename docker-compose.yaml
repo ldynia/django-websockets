@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: ../docker/Dockerfile
+    image: django/demo
+    container_name: django-demo-app
+    hostname: django-demo-postgress
+    ports: 
+      - 8000:8000
+    depends_on: 
+      - postgres
+    environment: 
+      - DJANGO_SETTINGS_MODULE=config.postgres
+      # - DJANGO_SETTINGS_MODULE=config.base
+    volumes:
+       - ./app:/app
+  postgres:
+    image: postgres:13.2
+    container_name: django-demo-postgres
+    hostname: django-demo-postgres
+    environment: 
+      - POSTGRES_PASSWORD=postgres

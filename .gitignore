@@ -1,0 +1,19 @@
+# ignore files
+.ash_history
+.bash_history
+.coverage
+.env.secrets
+package-lock.json
+yarn.lock
+
+# ignore files by extension
+*.log
+*.pyc
+*.pyo
+*.sqlite3
+
+# ignore directories
+__pycache__/
+.cache/
+.pytest_cache/
+node_modules/
