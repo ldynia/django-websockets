@@ -1,2 +1,6 @@
 Django
 psycopg2-binary
+channels==3.0.3
+# channels==2.4.0
+graphene-django==2.15.0
+graphene-subscriptions==1.0.2

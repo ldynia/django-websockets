@@ -16,7 +16,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
+    'channels',
+    # 'graphene_subscriptions',
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'config.schema.schema'
+}
+
+ASGI_APPLICATION = "config.asgi.application"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
