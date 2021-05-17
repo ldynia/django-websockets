@@ -3,11 +3,15 @@
 CONTAINER_IP=$(ip addr | grep inet | tail -n1 | awk '{print $2}' |  cut -d'/' -f1)
 echo "Container IP: $CONTAINER_IP"
 
+echo "Starting redis server"
+redis-server --daemonize yes
+
 echo "Install requirements.txt"
 pip install -r /app/requirements.txt --no-cache-dir
 
-# echo "Run migrations"
-# python /app/manage.py migrate
+echo "Run migrations"
+python /app/manage.py makemigrations
+python /app/manage.py migrate
 
 # if args empty
 if [ -z "$@" ]

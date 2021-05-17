@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+    <textarea id="log" cols="100" rows="20"></textarea><br>
+    <input id="message-input" type="text" size="100"><br>
+    <input id="message-submit" type="button" value="Send">
+    <script id="model-name" type="application/json">""</script>
+    <script>
+        const modelName = JSON.parse(document.getElementById('model-name').textContent);
+        const socket = new WebSocket('ws://' + window.location.host + window.location.pathname);
+
+        socket.onopen = function(e) {
+            console.info('Connected to:', e.target.url)
+        }
+
+        socket.onmessage = function(e) {
+            console.info('Received from:', e.target.url)
+            const data = JSON.parse(e.data);
+            document.querySelector('#log').value += data.message + '\n';
+        };
+
+        socket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly', e.target.url);
+        };
+
+        document.querySelector('#message-input').focus();
+        document.querySelector('#message-input').onkeyup = function(e) {
+            const enterKeyPressed = (e.keyCode === 13)
+            if (enterKeyPressed) {
+                document.querySelector('#message-submit').click();
+            }
+        };
+
+        document.querySelector('#message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#message-input');
+            const message = messageInputDom.value;
+            socket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>
