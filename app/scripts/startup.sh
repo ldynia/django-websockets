@@ -17,7 +17,9 @@ python /app/manage.py migrate
 if [ -z "$@" ]
 then
     echo "Run Server"
-    python /app/manage.py runserver 0.0.0.0:$PORT
+    # python /app/manage.py runserver 0.0.0.0:$PORT
+    # gunicorn config.wsgi:application -w 8 -b 0.0.0.0:$PORT
+    daphne config.asgi:application -b 0.0.0.0 -p $PORT
 else
     echo "Executeing \$@ command: $@"
     exec $@
