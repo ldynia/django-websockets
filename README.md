@@ -9,7 +9,8 @@ This project demonstrate POC of how to married WebSockets with Django signals.
     ```bash
     $ git clone https://github.com/ldynia/django-websockets -b debian
     $ cd django-websockets
-    $ git checkout tags/v1.0.0 -b POC
+    $ git checkout tags/v1.0.0 -b POC/sync
+    $ git checkout tags/v2.0.0 -b POC/async
     $ docker-compose up
     ```
 
