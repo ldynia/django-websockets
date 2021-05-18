@@ -1,24 +1,24 @@
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import JsonWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 
-class ModelConsumer(JsonWebsocketConsumer):
+class ModelConsumer(AsyncJsonWebsocketConsumer):
 
-    def connect(self):
+    async def connect(self):
         self.model = self.scope['url_route']['kwargs']['model_name']
 
-        async_to_sync(self.channel_layer.group_add)(self.model, self.channel_name)
-        self.accept()
+        await self.channel_layer.group_add(self.model, self.channel_name)
+        await self.accept()
 
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(self.model, self.channel_name)
-        self.close()
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(self.model, self.channel_name)
+        await self.close()
 
-    def receive_json(self, content):
-        async_to_sync(self.channel_layer.group_send)(self.model, {
+    async def receive_json(self, content):
+        await self.channel_layer.group_send(self.model, {
             'type': 'send.data',
             'data': content
         })
 
-    def send_data(self, event):
-        self.send_json(content=event['data'])
+    async def send_data(self, event):
+        await self.send_json(content=event['data'])
