@@ -10,6 +10,7 @@ echo "Install requirements.txt"
 pip install -r /app/requirements.txt --no-cache-dir
 
 echo "Run migrations"
+python /app/manage.py collectstatic --no-input
 python /app/manage.py makemigrations
 python /app/manage.py migrate
 

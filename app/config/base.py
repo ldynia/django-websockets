@@ -7,6 +7,9 @@ SECRET_KEY = 'f#365mreuoz(ntukfs*2z681jdls*r4ix38to16%j&a7s-4(vz'
 
 DEBUG = True
 
+STATIC_URL = '/static/'
+STATIC_ROOT = f'{BASE_DIR}/static/'
+
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
@@ -105,5 +108,3 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-STATIC_URL = '/static/'

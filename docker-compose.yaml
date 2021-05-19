@@ -1,5 +1,14 @@
 version: "3.8"
 services:
+  proxy:
+    image: nginx:1.20.0
+    container_name: django-demo-proxy
+    ports:
+      - 80:80
+    volumes:
+      - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
   app:
     build:
       context: ./app
@@ -7,11 +16,11 @@ services:
     image: django/demo
     container_name: django-demo-app
     hostname: django-demo-postgress
-    ports: 
+    ports:
       - 8000:8000
-    depends_on: 
+    depends_on:
       - postgres
-    environment: 
+    environment:
       - DJANGO_SETTINGS_MODULE=config.postgres
       # - DJANGO_SETTINGS_MODULE=config.base
     volumes:
@@ -20,5 +29,5 @@ services:
     image: postgres:13.2
     container_name: django-demo-postgres
     hostname: django-demo-postgres
-    environment: 
+    environment:
       - POSTGRES_PASSWORD=postgres
